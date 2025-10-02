@@ -12,7 +12,7 @@ if command -v eza &> /dev/null; then
   alias ll="eza -alF"
   alias la="eza -A"
   alias l="eza -F"
-  alias tree="eza --tree"
+  alias tree="eza --tree --icons"
   alias ols="/bin/ls"  # original ls
 else
   alias ls="ls -G"  # colorize on macOS
