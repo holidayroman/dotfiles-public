@@ -3,6 +3,9 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+# Git shortcuts
+alias gs="git status"
+
 # Modern replacements (if available)
 if command -v eza &> /dev/null; then
   alias ls="eza"
