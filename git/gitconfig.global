@@ -13,7 +13,6 @@
 	st = status
 	a = add
 	p = push
-	l = pull
 	d = diff
 
 	# Advanced aliases
@@ -23,6 +22,7 @@
 	wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 
 	# Logging
+	l = log --oneline --decorate --graph --color
 	log1 = log --oneline --graph --decorate
 	logp = log --pretty=format:'%h - %an, %ar : %s'
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
