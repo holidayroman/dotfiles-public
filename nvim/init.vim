@@ -10,3 +10,8 @@ source ~/.vimrc
 
 " Neovim-specific configurations can go below this line
 " (Currently empty - add as needed)
+
+" Neovim-specific local overrides
+if filereadable(expand("~/.config/nvim/local.vim"))
+  source ~/.config/nvim/local.vim
+endif

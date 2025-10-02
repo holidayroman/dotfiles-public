@@ -1,0 +1,3 @@
+# Machine-specific override files
+*.local
+*.user

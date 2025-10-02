@@ -174,6 +174,6 @@ set autochdir           " automatically change directories to current file
 """""""""""""""""""
 " Local Overrides "
 """""""""""""""""""
-if filereadable(expand("~/.vimrc-local"))
-  source ~/.vimrc-local
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
 endif
