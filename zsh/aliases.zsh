@@ -39,32 +39,9 @@ if command -v rg &> /dev/null; then
   }
 fi
 
-# Docker aliases (if docker is available)
-if command -v docker &> /dev/null; then
-  alias d="docker"
-  alias dc="docker-compose"
-  alias dps="docker ps"
-  alias dex="docker exec -it"
-fi
-
 # Development shortcuts
 if command -v nvim &> /dev/null; then
   alias vim="nvim"
   alias vi="nvim"
   alias ovim="/usr/bin/vim"  # original vim
-fi
-alias reload="source ~/.zshrc"
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vimrc"
-
-# Network
-if [[ "$OSTYPE" != "cygwin" ]]; then
-	alias ports="sudo lsof -Pan -i tcp -i udp"
-fi
-
-# macOS specific
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  alias showfiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
-  alias hidefiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
-  alias flushdns="sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 fi
