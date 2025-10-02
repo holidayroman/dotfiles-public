@@ -52,6 +52,7 @@ Machine-specific customizations go in these files (created automatically, not tr
 - **~/.config/nvim/local.vim** - Neovim-specific customizations
 - **~/.gitconfig.local** - Git settings (proxy, credentials, etc)
 - **~/.gitconfig.user** - Git user identity (name/email)
+- **~/.dotfiles/.git/hooks/pre-commit** - Pre-commit hook to block sensitive terms from being committed
 
 ## 🔧 Updating
 
