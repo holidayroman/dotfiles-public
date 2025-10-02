@@ -24,7 +24,7 @@ export PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
 # Load aliases
-source ~/.dotfiles/zsh/aliases.zsh
+[ -f ~/.dotfiles/zsh/aliases.zsh ] && source ~/.dotfiles/zsh/aliases.zsh
 
 # ZSH plugins (loaded directly, no framework)
 ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"
