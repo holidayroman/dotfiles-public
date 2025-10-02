@@ -40,3 +40,7 @@
       stdin: true
       stdout: true
       stderr: true
+    - description: Setting up Git pre-commit hook
+      command: ./scripts/setup-git-hook.sh
+      stdout: true
+      stderr: true
