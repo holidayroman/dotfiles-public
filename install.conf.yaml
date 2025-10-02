@@ -1,0 +1,34 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean: ['~']
+
+- link:
+    ~/.editorconfig: editorconfig
+    ~/.gitconfig: git/gitconfig
+    ~/.vimrc: vim/vimrc
+    ~/.config/nvim/init.vim: nvim/init.vim
+    ~/.config/starship.toml: starship/starship.toml
+    ~/.zshrc: zsh/zshrc
+
+- create:
+    - ~/.config/nvim
+    - ~/.vimrc-local
+    - ~/.zshrc.local
+
+- shell:
+    - description: Installing tools
+      command: ./scripts/install-tools.sh
+      stdout: true
+      stderr: true
+    - description: Setting up ZSH
+      command: ./scripts/install-zsh.sh
+      stdout: true
+      stderr: true
+    - description: Setting up Git user
+      command: ./scripts/setup-git-user.sh
+      stdin: true
+      stdout: true
+      stderr: true
