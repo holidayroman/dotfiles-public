@@ -78,6 +78,10 @@ fi
 # Local customizations
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || echo "⚠️  nvm not installed - use nvm to manage node"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
 # Initialize Starship prompt (must be at the end)
 if command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
