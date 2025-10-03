@@ -50,6 +50,7 @@ call plug#end()
 """""""""""
 " General "
 """""""""""
+let mapleader = " "
 filetype plugin on
 iabbrev </ </<C-X><C-O>
 set nohlsearch
@@ -66,6 +67,14 @@ nmap <C-p> :Files<CR>
 nmap <leader>b :Buffers<CR>
 nmap <leader>f :Rg<CR>
 nmap <leader>t :Tags<CR>
+
+" Make Rg respect .gitignore and exclude .git directory
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case --glob "!.git" '.shellescape(<q-args>),
+  \   1,
+  \   fzf#vim#with_preview(),
+  \   <bang>0)
 
 " File explorer (netrw is built-in)
 nmap <leader>nt :Explore<CR>
@@ -95,7 +104,6 @@ map F <Plug>(easymotion-bd-w)
 syntax on               " enable syntax highlighting
 set nospell             " disable spell checking by default
 set number              " line numbers
-set relativenumber      " relative line numbers
 set cursorline          " current line indicator
 set scrolloff=8         " adds padding to the current line
 set showmatch           " highlights matching bracket
