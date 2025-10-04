@@ -44,3 +44,8 @@
       command: ./scripts/setup-git-hook.sh
       stdout: true
       stderr: true
+    - description: Installing development environments (nvm, pyenv, rustup)
+      command: ./scripts/install-dev-environments.sh
+      stdin: true
+      stdout: true
+      stderr: true

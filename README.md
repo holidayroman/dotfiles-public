@@ -16,8 +16,9 @@ The install script will:
 3. Set up ZSH with Starship prompt
 4. Configure Neovim and Vim
 5. Set up Git with local user configuration
-6. Create all necessary symlinks using dotbot
-7. Create local override files for machine-specific customization
+6. Optionally install development environments (nvm, pyenv, rustup)
+7. Create all necessary symlinks using dotbot
+8. Create local override files for machine-specific customization
 
 After installation, restart your terminal.
 
@@ -42,6 +43,17 @@ After installation, restart your terminal.
 - **htop** - Process monitor
 - **tldr** - Simplified man pages
 - **M+ 1m Nerd Font** - Monospaced font with icons
+
+### Development Environments (Optional)
+During installation, you'll be prompted to install:
+- **nvm** - Node.js version manager
+- **pyenv** - Python version manager
+- **rustup** - Rust toolchain installer (includes cargo)
+
+You can also run the installer separately:
+```bash
+./scripts/install-dev-environments.sh
+```
 
 ## ⚙️ Local Overrides
 
