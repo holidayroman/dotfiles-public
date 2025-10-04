@@ -1,176 +1,83 @@
 #!/bin/bash
 
 # Install development environment tools (nvm, pyenv, rustup)
-# This script checks if tools are already installed and prompts for installation
+# Shell config is already in zsh/zshrc.zsh
 
 set -e
 
-# Colors for output
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Detect shell config file
-detect_shell_config() {
-    if [ -n "$ZSH_VERSION" ]; then
-        echo "$HOME/.zshrc"
-    elif [ -n "$BASH_VERSION" ]; then
-        if [ -f "$HOME/.bash_profile" ]; then
-            echo "$HOME/.bash_profile"
-        else
-            echo "$HOME/.bashrc"
-        fi
-    else
-        echo "$HOME/.profile"
-    fi
-}
+echo -e "${BLUE}Development Environment Setup${NC}\n"
 
-SHELL_CONFIG=$(detect_shell_config)
-
-# Check if a line exists in shell config
-config_has_line() {
-    local pattern="$1"
-    grep -q "$pattern" "$SHELL_CONFIG" 2>/dev/null
-}
-
-# Add line to shell config if it doesn't exist
-add_to_config() {
-    local line="$1"
-    local comment="$2"
-
-    if ! grep -Fq "$line" "$SHELL_CONFIG" 2>/dev/null; then
-        echo "" >> "$SHELL_CONFIG"
-        [ -n "$comment" ] && echo "# $comment" >> "$SHELL_CONFIG"
-        echo "$line" >> "$SHELL_CONFIG"
-        echo -e "${GREEN}Added to $SHELL_CONFIG${NC}"
-    else
-        echo -e "${YELLOW}Already in $SHELL_CONFIG${NC}"
-    fi
-}
-
-# Install nvm (Node Version Manager)
-install_nvm() {
-    echo -e "\n${BLUE}=== Node Version Manager (nvm) ===${NC}"
-
-    if [ -d "$HOME/.nvm" ] || command -v nvm &> /dev/null; then
-        echo -e "${GREEN}nvm is already installed${NC}"
-        return
-    fi
-
+# nvm + Node.js
+echo -e "${BLUE}=== Node.js (nvm) ===${NC}"
+if [ ! -d "$HOME/.nvm" ]; then
     read -p "Install nvm? (y/n) " -n 1 -r
     echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Skipping nvm"
-        return
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm install --lts
+        nvm alias default 'lts/*'
+        echo -e "${GREEN}✓ Installed nvm and Node.js LTS${NC}"
     fi
-
-    echo "Installing nvm..."
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
-    # Add to shell config
-    if ! config_has_line "NVM_DIR"; then
-        cat >> "$SHELL_CONFIG" << 'EOF'
-
-# nvm (Node Version Manager)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-EOF
-        echo -e "${GREEN}Added nvm to $SHELL_CONFIG${NC}"
+else
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    if ! command -v node &> /dev/null; then
+        nvm install --lts
+        nvm alias default 'lts/*'
+        echo -e "${GREEN}✓ Installed Node.js LTS${NC}"
+    else
+        echo -e "${GREEN}✓ Already installed${NC}"
     fi
+fi
 
-    echo -e "${GREEN}nvm installed successfully!${NC}"
-    echo "Restart your shell or run: source $SHELL_CONFIG"
-}
-
-# Install pyenv (Python Version Manager)
-install_pyenv() {
-    echo -e "\n${BLUE}=== Python Version Manager (pyenv) ===${NC}"
-
-    if command -v pyenv &> /dev/null; then
-        echo -e "${GREEN}pyenv is already installed${NC}"
-        return
-    fi
-
+# pyenv + Python
+echo -e "\n${BLUE}=== Python (pyenv) ===${NC}"
+if ! command -v pyenv &> /dev/null; then
     read -p "Install pyenv? (y/n) " -n 1 -r
     echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Skipping pyenv"
-        return
-    fi
-
-    echo "Installing pyenv..."
-
-    # Check OS and install accordingly
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        if command -v brew &> /dev/null; then
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
             brew install pyenv
         else
-            echo -e "${YELLOW}Homebrew not found, using curl installer${NC}"
             curl https://pyenv.run | bash
         fi
+        echo -e "${GREEN}✓ Installed pyenv${NC}"
+    fi
+fi
+
+if command -v pyenv &> /dev/null; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+
+    if ! command -v python &> /dev/null; then
+        latest=$(pyenv install --list | grep -E '^\s*3\.[0-9]+\.[0-9]+$' | tail -1 | xargs)
+        pyenv install "$latest"
+        pyenv global "$latest"
+        echo -e "${GREEN}✓ Installed Python $latest${NC}"
     else
-        curl https://pyenv.run | bash
+        echo -e "${GREEN}✓ Already installed${NC}"
     fi
+fi
 
-    # Add to shell config
-    if ! config_has_line "pyenv init"; then
-        cat >> "$SHELL_CONFIG" << 'EOF'
-
-# pyenv (Python Version Manager)
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-EOF
-        echo -e "${GREEN}Added pyenv to $SHELL_CONFIG${NC}"
-    fi
-
-    echo -e "${GREEN}pyenv installed successfully!${NC}"
-    echo "Restart your shell or run: source $SHELL_CONFIG"
-}
-
-# Install rustup (Rust toolchain installer)
-install_rustup() {
-    echo -e "\n${BLUE}=== Rust Toolchain (rustup) ===${NC}"
-
-    if command -v rustup &> /dev/null || command -v cargo &> /dev/null; then
-        echo -e "${GREEN}rustup/cargo is already installed${NC}"
-        return
-    fi
-
+# rustup + Rust
+echo -e "\n${BLUE}=== Rust (rustup) ===${NC}"
+if ! command -v cargo &> /dev/null; then
     read -p "Install rustup? (y/n) " -n 1 -r
     echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Skipping rustup"
-        return
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        . "$HOME/.cargo/env"
+        echo -e "${GREEN}✓ Installed Rust${NC}"
     fi
+else
+    echo -e "${GREEN}✓ Already installed${NC}"
+fi
 
-    echo "Installing rustup..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-    # Add to shell config (rustup installer usually does this, but check)
-    if ! config_has_line "cargo/env"; then
-        add_to_config '. "$HOME/.cargo/env"' "Rust/Cargo"
-    fi
-
-    echo -e "${GREEN}rustup installed successfully!${NC}"
-    echo "Restart your shell or run: source $SHELL_CONFIG"
-}
-
-# Main execution
-main() {
-    echo -e "${BLUE}Development Environment Setup${NC}"
-    echo "This will optionally install: nvm, pyenv, rustup"
-    echo "Shell config: $SHELL_CONFIG"
-    echo
-
-    install_nvm
-    install_pyenv
-    install_rustup
-
-    echo -e "\n${GREEN}Done!${NC}"
-    echo "Remember to restart your shell or run: source $SHELL_CONFIG"
-}
-
-main
+echo -e "\n${GREEN}Done! Restart your shell.${NC}"
