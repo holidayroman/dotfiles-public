@@ -19,6 +19,12 @@ Plug 'morhetz/gruvbox'
 " Status line (lightweight, works in vim and neovim)
 Plug 'itchyny/lightline.vim'
 
+" File explorer
+Plug 'preservim/nerdtree'
+
+" Language server and autocompletion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Git integration
 Plug 'airblade/vim-gitgutter'
 
@@ -52,8 +58,6 @@ call plug#end()
 """""""""""
 let mapleader = " "
 filetype plugin on
-iabbrev </ </<C-X><C-O>
-set nohlsearch
 set encoding=utf8       " force utf8 encoding
 set visualbell          " use visual bell
 set mouse=a             " enables mouse handling
@@ -61,6 +65,24 @@ set backspace=2         " allow backspacing over indent, eol, and start
 if !has('nvim')
   set pastetoggle=<F2>  " map key for toggling pastemode (vim only, neovim handles paste automatically)
 endif
+
+" NerdTree mappings
+nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>nf :NERDTreeFind<CR>
+
+" NerdTree config
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.git$', '\.DS_Store$', 'node_modules']
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+
+" CoC config - Tab completion
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+" CoC extensions to auto-install
+let g:coc_global_extensions = ['coc-tsserver', 'coc-pyright', 'coc-rust-analyzer']
 
 " FZF mappings
 nmap <C-p> :Files<CR>
@@ -75,15 +97,6 @@ command! -bang -nargs=* Rg
   \   1,
   \   fzf#vim#with_preview(),
   \   <bang>0)
-
-" File explorer (netrw is built-in)
-nmap <leader>nt :Explore<CR>
-
-" Disable arrow keys (force hjkl)
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
 
 " Convenience mappings
 map <Leader>ws :w !sudo tee %
@@ -113,17 +126,6 @@ set signcolumn=yes      " always show sign column
 set termguicolors       " enable true color support
 set t_Co=256
 
-" Font and appearance
-if has('gui_running')
-  if has('gui_macvim')
-    set guifont=MplusNerdFont-Regular:h12
-  elseif has('gui_win32')
-    set guifont=MplusNerdFont-Regular:h11:cANSI
-  else
-    set guifont=M+\ 1m\ Nerd\ Font\ 11
-  endif
-endif
-
 " Colorscheme
 set background=dark
 try
@@ -148,10 +150,6 @@ let g:lightline = {
       \ },
       \ }
 
-" Netrw settings (built-in file explorer)
-let g:netrw_banner = 0        " disable banner
-let g:netrw_liststyle = 3     " tree view
-let g:netrw_winsize = 25      " 25% width
 
 """""""""""""""""""""""""""
 " Indentation and spacing "
@@ -176,7 +174,6 @@ set smartcase           " override ignorecase if capital letter is used
 """""""""""""""""""
 set showcmd             " shows command information at bottom
 set wildmenu            " autocomplete commands
-set autochdir           " automatically change directories to current file
 
 
 """""""""""""""""""
