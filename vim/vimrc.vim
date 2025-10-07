@@ -68,7 +68,6 @@ endif
 
 " NerdTree mappings
 nmap <leader>n :NERDTreeToggle<CR>
-nmap <leader>nf :NERDTreeFind<CR>
 
 " NerdTree config
 let NERDTreeShowHidden=1
@@ -97,6 +96,12 @@ command! -bang -nargs=* Rg
   \   1,
   \   fzf#vim#with_preview(),
   \   <bang>0)
+
+" Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Convenience mappings
 map <Leader>ws :w !sudo tee %
