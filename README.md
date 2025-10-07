@@ -14,7 +14,7 @@ The install script will:
 1. Install Homebrew (macOS only)
 2. Install modern CLI tools via Brewfile
 3. Set up ZSH with Starship prompt
-4. Configure Neovim and Vim
+4. Configure Vim with vim-plug and plugins
 5. Set up Git with local user configuration
 6. Optionally install development environments (nvm, pyenv, rustup)
 7. Create all necessary symlinks using dotbot
@@ -26,7 +26,15 @@ After installation, restart your terminal.
 
 ### Core Configuration
 - **ZSH**: Starship prompt with syntax highlighting and autosuggestions
-- **Neovim/Vim**: Modern editor configuration
+- **Vim**: Modern editor with plugins via vim-plug
+  - **NerdTree** - File explorer
+  - **CoC.nvim** - Language server and autocompletion (Python, JavaScript/TypeScript, Rust)
+  - **FZF** - Fuzzy file finder
+  - **ALE** - Linting and fixing
+  - **Gruvbox** - Color scheme with Lightline status bar
+  - **vim-gitgutter** - Git diff markers
+  - **vim-easymotion** - Enhanced movement
+  - **vim-surround** & **auto-pairs** - Text manipulation
 - **Git**: Enhanced configuration with delta diff viewer
 - **EditorConfig**: Consistent coding style across editors
 
