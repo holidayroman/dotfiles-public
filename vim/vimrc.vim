@@ -68,7 +68,7 @@ nmap <leader>n :NERDTreeToggle<CR>  " Space+n: toggle file explorer
 
 " NerdTree config
 let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.git$', '\.DS_Store$', 'node_modules']
+let NERDTreeIgnore=['\.DS_Store$', 'node_modules']
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
 
@@ -86,7 +86,6 @@ nmap <silent> gr <Plug>(coc-references)     " gr: find references
 nmap <C-p> :Files<CR>           " Ctrl+p: fuzzy find files by name
 nmap <leader>b :Buffers<CR>     " Space+b: list open buffers
 nmap <leader>f :Rg<CR>          " Space+f: search file contents (ripgrep)
-nmap <leader>t :Tags<CR>        " Space+t: search tags (requires ctags)
 
 " Make Rg respect .gitignore and exclude .git directory
 command! -bang -nargs=* Rg
