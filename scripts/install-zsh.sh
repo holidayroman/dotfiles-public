@@ -29,7 +29,30 @@ fi
 # Setup fzf shell integration
 if command -v fzf > /dev/null 2>&1 && [ ! -f "$HOME/.fzf.zsh" ]; then
   echo "Setting up fzf shell integration..."
-  $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
+
+  # Find fzf install script based on OS
+  if [ "$(uname)" = "Darwin" ] && command -v brew > /dev/null 2>&1; then
+    # macOS with Homebrew
+    FZF_INSTALL="$(brew --prefix)/opt/fzf/install"
+  elif [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
+    # Debian/Ubuntu - fzf shell integration installed separately
+    echo "FZF installed via apt - shell integration files available in /usr/share/doc/fzf/examples/"
+    echo "These will be sourced automatically by zshrc if fzf is installed"
+    FZF_INSTALL=""
+  else
+    # Try to find fzf install script in common locations
+    for loc in ~/.fzf/install /usr/local/opt/fzf/install; do
+      if [ -f "$loc" ]; then
+        FZF_INSTALL="$loc"
+        break
+      fi
+    done
+  fi
+
+  # Run fzf install if found
+  if [ -n "$FZF_INSTALL" ] && [ -f "$FZF_INSTALL" ]; then
+    $FZF_INSTALL --key-bindings --completion --no-update-rc
+  fi
 fi
 
 # Make zsh default shell

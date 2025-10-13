@@ -1,9 +1,17 @@
 # Dotfiles
 
-Modern dotfiles setup for macOS and Linux with ZSH, Neovim/Vim, and Git configurations.
+Modern dotfiles setup for macOS and Linux (Debian/Ubuntu) with ZSH, Neovim/Vim, and Git configurations.
 
 ## ⚡ Quick Install
 
+### macOS
+```bash
+git clone --recursive https://github.com/yourusername/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install
+```
+
+### Linux (Debian/Ubuntu)
 ```bash
 git clone --recursive https://github.com/yourusername/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
@@ -11,14 +19,36 @@ cd ~/.dotfiles
 ```
 
 The install script will:
-1. Install Homebrew (macOS only)
-2. Install modern CLI tools via Brewfile
+1. Install prerequisites (curl, git, zsh, vim, build-essential on Linux)
+2. Install modern CLI tools (via Homebrew on macOS, apt on Debian/Ubuntu)
 3. Set up ZSH with Starship prompt
 4. Configure Vim with vim-plug and plugins
 5. Set up Git with local user configuration
 6. Optionally install development environments (nvm, pyenv, rustup)
 7. Create all necessary symlinks using dotbot
 8. Create local override files for machine-specific customization
+
+**Note for other Linux distros**: Currently only Debian/Ubuntu is fully supported. For Fedora, Arch, or other distros, you'll need to manually install the packages listed in the Brewfile.
+
+### Installing Nerd Fonts
+
+**macOS**: Fonts are automatically installed via Homebrew cask (M+ 1m Nerd Font)
+
+**Linux Desktop**: Install Nerd Fonts manually:
+```bash
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip
+unzip MPlus.zip
+rm MPlus.zip
+fc-cache -fv
+```
+
+**WSL**: Install fonts on Windows (not in WSL):
+1. Download Nerd Fonts from: https://github.com/ryanoasis/nerd-fonts/releases
+2. Recommended: M+ 1m Nerd Font (MPlus.zip)
+3. Extract and right-click fonts → "Install for all users"
+4. Configure your Windows terminal to use the font (Windows Terminal, VSCode terminal, etc.)
 
 After installation, restart your terminal.
 
