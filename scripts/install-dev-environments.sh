@@ -38,6 +38,15 @@ fi
 
 # pyenv + Python
 echo -e "\n${BLUE}=== Python (pyenv) ===${NC}"
+export PYENV_ROOT="$HOME/.pyenv"
+
+# Try to initialize pyenv if it exists
+if [ -d "$PYENV_ROOT/bin" ]; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
+# Check if pyenv command works after initialization
 if ! command -v pyenv &> /dev/null; then
     read -p "Install pyenv? (y/n) " -n 1 -r
     echo
@@ -47,15 +56,15 @@ if ! command -v pyenv &> /dev/null; then
         else
             curl https://pyenv.run | bash
         fi
+        # Initialize after install
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
         echo -e "${GREEN}✓ Installed pyenv${NC}"
     fi
 fi
 
+# If pyenv is available, check Python
 if command -v pyenv &> /dev/null; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-
     if ! command -v python &> /dev/null; then
         latest=$(pyenv install --list | grep -E '^\s*3\.[0-9]+\.[0-9]+$' | tail -1 | xargs)
         pyenv install "$latest"
@@ -68,6 +77,13 @@ fi
 
 # rustup + Rust
 echo -e "\n${BLUE}=== Rust (rustup) ===${NC}"
+
+# Try to initialize cargo if it exists
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+# Check if cargo command works after initialization
 if ! command -v cargo &> /dev/null; then
     read -p "Install rustup? (y/n) " -n 1 -r
     echo
