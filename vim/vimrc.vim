@@ -104,7 +104,8 @@ nnoremap <C-l> <C-w>l  " Ctrl+l: move to right window
 " Convenience mappings
 map <Leader>ws :w !sudo tee %  " Space+ws: save file with sudo
 imap jk <ESC>                  " jk: exit insert mode (alternative to ESC)
-map ; :                        " ;: enter command mode (no shift needed)
+" ;: enter command mode (no shift needed)
+map ; :
 map <leader>q :q<CR>           " Space+q: quit
 map <leader>w :w<CR>           " Space+w: save
 map <leader>wq :wq<CR>         " Space+wq: save and quit
