@@ -38,21 +38,29 @@ else
       tldr
 
     # Install neovim - Debian repos have old version (0.7.x), CoC requires 0.8.0+
-    # Use AppImage for latest stable version
+    # Use pre-built tarball for latest stable version
     if ! command -v nvim &> /dev/null || ! nvim --version | grep -q "NVIM v0\.[8-9]\|NVIM v[1-9]"; then
       echo ""
       echo "Installing newer neovim (Debian repos have outdated version)..."
-      echo "Using AppImage for latest stable neovim..."
+      echo "Using pre-built tarball for latest stable neovim..."
 
-      # Download AppImage
-      curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-      chmod u+x nvim.appimage
+      # Download and extract tarball
+      NVIM_VERSION="v0.10.2"
+      curl -LO "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux64.tar.gz"
+      tar xzf nvim-linux64.tar.gz
 
-      # Move to local bin
+      # Move to local directory
+      rm -rf ~/.local/nvim-linux64
+      mv nvim-linux64 ~/.local/
+
+      # Create symlink
       mkdir -p ~/.local/bin
-      mv nvim.appimage ~/.local/bin/nvim
+      ln -sf ~/.local/nvim-linux64/bin/nvim ~/.local/bin/nvim
 
-      echo "✓ Installed neovim AppImage to ~/.local/bin/nvim"
+      # Cleanup
+      rm nvim-linux64.tar.gz
+
+      echo "✓ Installed neovim ${NVIM_VERSION} to ~/.local/nvim-linux64"
     fi
 
     # Create symlinks for Debian package names
