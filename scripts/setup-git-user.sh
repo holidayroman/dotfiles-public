@@ -4,7 +4,7 @@ USER_CONFIG="$HOME/.gitconfig.user"
 DOTFILES_DIR="$HOME/.dotfiles"
 
 # Configure global git user
-if [ -f "$USER_CONFIG" ]; then
+if [ -f "$USER_CONFIG" ] && grep -q "\[user\]" "$USER_CONFIG" 2>/dev/null; then
   echo "Global git user already configured:"
   grep -A2 "\[user\]" "$USER_CONFIG" | tail -2
   read -p "Do you want to update? (y/N) " -n 1 -r
