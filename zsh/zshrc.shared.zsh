@@ -75,9 +75,6 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# Local customizations
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
 # nvm (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

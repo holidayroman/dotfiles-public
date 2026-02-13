@@ -12,8 +12,8 @@ The installation process is orchestrated by `./install`, which:
 1. Initializes the dotbot submodule
 2. Executes dotbot with `install.conf.yaml` configuration
 3. Creates symlinks for config files to their target locations:
-   - `~/.zshrc` → `zsh/zshrc.zsh`
-   - `~/.vimrc` → `vim/vimrc.vim`
+   - `~/.zshrc.shared` → `zsh/zshrc.shared.zsh`
+   - `~/.vimrc.shared` → `vim/vimrc.shared.vim`
    - `~/.config/nvim/init.vim` → `nvim/init.vim`
    - `~/.gitconfig` → `git/gitconfig`
    - `~/.editorconfig` → `editorconfig.ini`
@@ -42,9 +42,9 @@ brew bundle --file=Brewfile                    # Install/update packages from Br
 ## Configuration Structure
 
 ### Local Override Files
-The system creates machine-specific override files (not tracked in git) that are sourced automatically:
-- `~/.zshrc.local` - ZSH customizations (aliases, paths, environment variables)
-- `~/.vimrc.local` - Vim customizations
+`~/.zshrc` and `~/.vimrc` are real files (not symlinks) that source their shared counterparts (`~/.zshrc.shared`, `~/.vimrc.shared`). Add local customizations directly in `~/.zshrc`/`~/.vimrc` below the `source` line — programs like nvm and conda can safely append to them without dirtying the repo.
+
+Other machine-specific override files (not tracked in git):
 - `~/.config/nvim/local.vim` - Neovim-specific customizations
 - `~/.gitconfig.local` - Git settings (proxy, credentials, etc)
 - `~/.gitconfig.user` - Git user identity (created by setup-git-user.sh)
@@ -53,7 +53,7 @@ The system creates machine-specific override files (not tracked in git) that are
 - Uses **vim-plug** for plugin management
 - Plugins auto-installed on first Vim launch
 - CoC extensions auto-install: `coc-tsserver`, `coc-pyright`, `coc-rust-analyzer`
-- Key mappings are extensively documented inline at vim/vimrc.vim:59-116
+- Key mappings are extensively documented inline at vim/vimrc.shared.vim:59-116
 
 ### ZSH Configuration
 - Does NOT use oh-my-zsh (lightweight, direct plugin loading)
@@ -61,8 +61,8 @@ The system creates machine-specific override files (not tracked in git) that are
   - zsh-syntax-highlighting
   - zsh-autosuggestions
   - zsh-history-substring-search
-- Development environment managers (nvm, pyenv, rustup) initialized at end of zshrc.zsh:81-97
-- Starship prompt initialized last (zshrc.zsh:95-97)
+- Development environment managers (nvm, pyenv, rustup) initialized at end of zshrc.shared.zsh:78-92
+- Starship prompt initialized last (zshrc.shared.zsh:94-96)
 
 ### Git Configuration
 - User identity stored separately in `~/.gitconfig.user` (not tracked)
@@ -80,14 +80,14 @@ The system creates machine-specific override files (not tracked in git) that are
 
 4. **ZSH Plugin Loading**: Plugins are loaded directly from `~/.zsh/plugins/` without a framework, making the setup lightweight and fast.
 
-5. **Development Environment Initialization Order**: In zshrc.zsh, tools initialize in this order: nvm (82-84) → pyenv (86-89) → cargo (92) → starship (95-97). This order matters for PATH precedence.
+5. **Development Environment Initialization Order**: In zshrc.shared.zsh, tools initialize in this order: nvm (79-81) → pyenv (83-86) → cargo (89) → starship (94-96). This order matters for PATH precedence.
 
 ## Modifying Configurations
 
 When editing configuration files, remember:
 - Main configs are in: `zsh/`, `vim/`, `nvim/`, `git/`, `starship/`
 - After editing, run `./install` to update symlinks (though usually unnecessary if symlinks already exist)
-- For Vim plugin changes, edit `vim/vimrc.vim` plugin list and run `:PlugInstall` in Vim
+- For Vim plugin changes, edit `vim/vimrc.shared.vim` plugin list and run `:PlugInstall` in Vim
 - For ZSH changes, source the file or restart shell to test: `source ~/.zshrc`
 - For Git alias changes, configs are immediately active (symlinked files)
 

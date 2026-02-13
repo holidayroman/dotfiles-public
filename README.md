@@ -97,8 +97,8 @@ You can also run the installer separately:
 
 Machine-specific customizations go in these files (created automatically, not tracked in git):
 
-- **~/.zshrc.local** - ZSH aliases, paths, environment variables
-- **~/.vimrc.local** - Vim customizations
+- **~/.zshrc** - Real file that sources `~/.zshrc.shared`; add local customizations below the `source` line
+- **~/.vimrc** - Real file that sources `~/.vimrc.shared`; add local customizations below the `source` line
 - **~/.config/nvim/local.vim** - Neovim-specific customizations
 - **~/.gitconfig.local** - Git settings (proxy, credentials, etc)
 - **~/.gitconfig.user** - Git user identity (name/email)

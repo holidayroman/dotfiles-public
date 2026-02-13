@@ -6,7 +6,7 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 " Source the shared vimrc
-source ~/.vimrc
+source ~/.vimrc.shared
 
 " Neovim-specific configurations can go below this line
 " (Currently empty - add as needed)

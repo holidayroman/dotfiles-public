@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install development environment tools (nvm, pyenv, rustup)
-# Shell config is already in zsh/zshrc.zsh
+# Shell config is already in zsh/zshrc.shared.zsh
 
 set -e
 

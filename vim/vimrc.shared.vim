@@ -178,11 +178,3 @@ set smartcase           " override ignorecase if capital letter is used
 """""""""""""""""""
 set showcmd             " shows command information at bottom
 set wildmenu            " autocomplete commands
-
-
-"""""""""""""""""""
-" Local Overrides "
-"""""""""""""""""""
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
