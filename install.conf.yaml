@@ -12,6 +12,7 @@
     ~/.config/nvim/init.vim: nvim/init.vim
     ~/.config/starship.toml: starship/starship.toml
     ~/.zshrc.shared: zsh/zshrc.shared.zsh
+    ~/.config/direnv/direnv.toml: direnv/direnv.toml
 
 - create:
     - ~/.config/nvim

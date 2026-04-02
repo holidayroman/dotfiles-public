@@ -8,6 +8,7 @@ brew "git-delta"    # Better git diff
 brew "zoxide"       # Better cd
 
 # Development tools
+brew "direnv"       # Per-directory env auto-loader
 brew "neovim"       # Modern vim
 brew "starship"     # Fast, minimal prompt
 brew "gh"           # GitHub CLI
@@ -15,4 +16,4 @@ brew "htop"         # Better top
 brew "tldr"         # Better man pages
 
 # Fonts for terminal (optional)
-cask "font-m+-nerd-font"
+cask "font-jetbrains-mono-nerd-font"

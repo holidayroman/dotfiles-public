@@ -3,7 +3,7 @@
 
 # Minimal, fast prompt
 add_newline = false
-format = "$username$hostname$directory$git_branch$git_status$character"
+format = "$username$hostname$directory$git_branch$git_status$nodejs$python$rust$golang$cmd_duration$character"
 
 # Timeout for command execution
 command_timeout = 500
@@ -46,18 +46,18 @@ ssh_only = true
 format = "@ [$hostname](bold blue) "
 disabled = false
 
-# Language-specific modules
+# Language-specific modules (only shown when project files detected)
 [nodejs]
-format = "via [ $version](bold green) "
+format = "[$symbol $version](bold green) "
 
 [python]
-format = "via [ $version](yellow) "
+format = "[$symbol $version( \\($virtualenv\\))](yellow) "
 
 [rust]
-format = "via [ $version](red) "
+format = "[$symbol $version](red) "
 
 [golang]
-format = "via [ $version](cyan) "
+format = "[$symbol $version](cyan) "
 
 # Execution time
 [cmd_duration]

@@ -16,6 +16,7 @@ setopt SHARE_HISTORY
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
+export DIRENV_LOG_FORMAT=""  # silence direnv loading messages
 
 # Development environment paths
 export PATH="/usr/local/bin:$PATH"
@@ -87,6 +88,12 @@ eval "$(pyenv init -)"
 
 # Rust/Cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# direnv (per-directory env auto-loader)
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+  direnv reload 2>/dev/null  # re-apply env after pyenv/nvm init
+fi
 
 # Initialize Starship prompt (must be at the end)
 if command -v starship &> /dev/null; then
