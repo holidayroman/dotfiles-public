@@ -1,37 +1,32 @@
 # Starship prompt configuration — Tokyo Night theme
 # https://starship.rs/config/
 
-add_newline = true
-format = """
-$username$hostname$directory$git_branch$git_status$fill$nodejs$python$rust$golang$cmd_duration
-$character"""
+add_newline = false
+format = "$username$hostname$directory$git_branch$git_status$nodejs$python$rust$golang$cmd_duration$character"
 
 # Timeout for command execution
 command_timeout = 500
 
 [character]
-success_symbol = "[❯](bold #7aa2f7)"
-error_symbol = "[❯](bold #f7768e)"
-
-[fill]
-symbol = " "
+success_symbol = "[❯](bold blue)"
+error_symbol = "[❯](bold red)"
 
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-style = "bold #7dcfff"
+style = "bold cyan"
 format = "[$path]($style)[$read_only]($read_only_style) "
 read_only = " 󰌾"
-read_only_style = "#f7768e"
+read_only_style = "red"
 
 [git_branch]
 format = "on [$symbol$branch]($style) "
 symbol = " "
-style = "bold #bb9af7"
+style = "bold purple"
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "#e0af68"
+style = "bold yellow"
 conflicted = "="
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -44,35 +39,35 @@ renamed = "»${count}"
 deleted = "✘${count}"
 
 [username]
-style_user = "bold #9ece6a"
-style_root = "bold #f7768e"
+style_user = "bold green"
+style_root = "bold red"
 format = "[$user]($style) "
 disabled = false
 show_always = false
 
 [hostname]
 ssh_only = true
-format = "at [$hostname](bold #7aa2f7) "
+format = "at [$hostname](bold blue) "
 disabled = false
 
 # Language-specific modules (only shown when project files detected)
 [nodejs]
-format = "[$symbol$version](bold #9ece6a) "
+format = "[$symbol$version](bold green) "
 symbol = " "
 
 [python]
-format = "[$symbol$version( \\($virtualenv\\))](bold #e0af68) "
+format = "[$symbol$version( \\($virtualenv\\))](bold yellow) "
 symbol = " "
 
 [rust]
-format = "[$symbol$version](bold #f7768e) "
+format = "[$symbol$version](bold red) "
 symbol = " "
 
 [golang]
-format = "[$symbol$version](bold #73daca) "
+format = "[$symbol$version](bold cyan) "
 symbol = " "
 
 # Execution time
 [cmd_duration]
 min_time = 2_000
-format = "took [$duration](#ff9e64) "
+format = "took [$duration](bold yellow) "
