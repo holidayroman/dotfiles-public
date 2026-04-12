@@ -32,23 +32,30 @@ The install script will:
 
 ### Installing Nerd Fonts
 
-**macOS**: Fonts are automatically installed via Homebrew cask (M+ 1m Nerd Font)
+This setup uses **M+1Code Nerd Font**. It's not available via Homebrew, so install manually:
 
-**Linux Desktop**: Install Nerd Fonts manually:
+**macOS**:
+```bash
+cd ~/Library/Fonts
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip
+unzip MPlus.zip
+rm MPlus.zip
+```
+
+**Linux Desktop**:
 ```bash
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts
-wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip
 unzip MPlus.zip
 rm MPlus.zip
 fc-cache -fv
 ```
 
 **WSL**: Install fonts on Windows (not in WSL):
-1. Download Nerd Fonts from: https://github.com/ryanoasis/nerd-fonts/releases
-2. Recommended: M+ 1m Nerd Font (MPlus.zip)
-3. Extract and right-click fonts → "Install for all users"
-4. Configure your Windows terminal to use the font (Windows Terminal, VSCode terminal, etc.)
+1. Download from: https://github.com/ryanoasis/nerd-fonts/releases (MPlus.zip)
+2. Extract and right-click fonts → "Install for all users"
+3. Configure your Windows terminal to use "M+1Code Nerd Font"
 
 After installation, restart your terminal.
 
@@ -61,7 +68,7 @@ After installation, restart your terminal.
   - **CoC.nvim** - Language server and autocompletion (Python, JavaScript/TypeScript, Rust)
   - **FZF** - Fuzzy file finder
   - **ALE** - Linting and fixing
-  - **Gruvbox** - Color scheme with Lightline status bar
+  - **Tokyo Night** - Color scheme with Lightline status bar
   - **vim-gitgutter** - Git diff markers
   - **vim-easymotion** - Enhanced movement
   - **vim-surround** & **auto-pairs** - Text manipulation
@@ -80,7 +87,7 @@ After installation, restart your terminal.
 - **gh** - GitHub CLI
 - **htop** - Process monitor
 - **tldr** - Simplified man pages
-- **M+ 1m Nerd Font** - Monospaced font with icons
+- **M+1Code Nerd Font** - Monospaced font with icons (installed manually, see below)
 
 ### Development Environments (Optional)
 During installation, you'll be prompted to install:

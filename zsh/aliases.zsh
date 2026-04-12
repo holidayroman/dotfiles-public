@@ -12,7 +12,7 @@ if command -v eza &> /dev/null; then
   alias ll="eza -alF"
   alias la="eza -A"
   alias l="eza -F"
-  alias tree="eza --tree --icons"
+  alias tree="eza --tree --icons=auto"
   alias ols="/bin/ls"  # original ls
 else
   alias ls="ls -G"  # colorize on macOS
@@ -31,12 +31,10 @@ if command -v fd &> /dev/null; then
   alias ofind="/usr/bin/find"  # original find
 fi
 
-# Ripgrep reminder
+# Prefer ripgrep over grep when available
 if command -v rg &> /dev/null; then
-  function grep() {
-    echo "💡 Tip: Consider using 'rg' instead of grep for faster searches"
-    command grep "$@"
-  }
+  alias grep="rg"
+  alias ogrep="/usr/bin/grep"  # original grep
 fi
 
 # Development shortcuts

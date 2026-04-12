@@ -14,7 +14,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Colorscheme
-Plug 'morhetz/gruvbox'
+Plug 'folke/tokyonight.nvim'
+Plug 'ghifarit53/tokyonight-vim'
 
 " Status line (lightweight, works in vim and neovim)
 Plug 'itchyny/lightline.vim'
@@ -132,8 +133,10 @@ set t_Co=256
 
 " Colorscheme
 set background=dark
+let g:tokyonight_style = 'night'
+let g:tokyonight_enable_italic = 1
 try
-  colorscheme gruvbox
+  colorscheme tokyonight
 catch
   colorscheme default
 endtry
@@ -144,7 +147,7 @@ set ttimeoutlen=100
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'tokyonight',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
@@ -161,7 +164,7 @@ let g:lightline = {
 set smartindent         " usually does what we want
 set expandtab           " spaces instead of tabs
 set smarttab            " interprets consecutive spaces as tabs
-set shiftwidth=2        " tab = 4 spaces
+set shiftwidth=2        " tab = 2 spaces
 set softtabstop=2
 set nowrap              " disables line wrapping
 

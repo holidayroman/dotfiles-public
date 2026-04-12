@@ -13,6 +13,9 @@
     ~/.config/starship.toml: starship/starship.toml
     ~/.zshrc.shared: zsh/zshrc.shared.zsh
     ~/.config/direnv/direnv.toml: direnv/direnv.toml
+    ~/Library/Application Support/iTerm2/DynamicProfiles/dotfiles-profile.json:
+      path: iterm/dotfiles-profile.json
+      if: '[ "$(uname)" = "Darwin" ]'
 
 - create:
     - ~/.config/nvim

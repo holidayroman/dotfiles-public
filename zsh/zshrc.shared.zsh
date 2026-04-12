@@ -47,7 +47,17 @@ if [ -f "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-sea
   bindkey '^[[B' history-substring-search-down
 fi
 
-# Enable completion system
+# Homebrew completion (macOS)
+if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# Docker completion
+if command -v docker &> /dev/null; then
+  FPATH="$HOME/.docker/completions:${FPATH}"
+fi
+
+# Enable completion system (must be after FPATH additions)
 autoload -Uz compinit
 compinit
 
@@ -63,11 +73,13 @@ if command -v fzf &> /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-fi
 
-# Homebrew completion (macOS)
-if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  # Tokyo Night colors for fzf
+  export FZF_DEFAULT_OPTS='
+    --color=fg:#c0caf5,bg:#1a1b26,hl:#bb9af7
+    --color=fg+:#c0caf5,bg+:#283457,hl+:#7dcfff
+    --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7aa2f7
+    --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a'
 fi
 
 # Zoxide (smarter cd)
@@ -83,7 +95,7 @@ export NVM_DIR="$HOME/.nvm"
 # pyenv (Python Version Manager)
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv &> /dev/null && eval "$(pyenv init -)"
 
 # Rust/Cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

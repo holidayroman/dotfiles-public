@@ -82,6 +82,11 @@
 	light = false
 	line-numbers = true
 	side-by-side = true
+	syntax-theme = TwoDark
+	minus-style = "syntax #37222c"
+	minus-emph-style = "syntax #713137"
+	plus-style = "syntax #1b2e1e"
+	plus-emph-style = "syntax #2a6233"
 
 [interactive]
 	diffFilter = delta --color-only

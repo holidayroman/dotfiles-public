@@ -14,6 +14,3 @@ brew "starship"     # Fast, minimal prompt
 brew "gh"           # GitHub CLI
 brew "htop"         # Better top
 brew "tldr"         # Better man pages
-
-# Fonts for terminal (optional)
-cask "font-jetbrains-mono-nerd-font"

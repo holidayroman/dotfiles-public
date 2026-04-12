@@ -1,0 +1,141 @@
+{
+  "Profiles": [
+    {
+      "Name": "Dotfiles - Tokyo Night",
+      "Guid": "dotfiles-tokyo-night-profile",
+      "Dynamic Profile Parent Name": "Default",
+
+      "Normal Font": "M+1CodeNerdFont-Regular 15",
+      "Use Non-ASCII Font": false,
+      "Horizontal Spacing": 1.0,
+      "Vertical Spacing": 1.0,
+
+      "Cursor Type": 1,
+      "Blinking Cursor": false,
+
+      "Columns": 120,
+      "Rows": 35,
+
+      "Scrollback Lines": 10000,
+      "Unlimited Scrollback": false,
+
+      "Background Color": {
+        "Red Component": 0.101960784,
+        "Green Component": 0.105882353,
+        "Blue Component": 0.149019608
+      },
+      "Foreground Color": {
+        "Red Component": 0.752941176,
+        "Green Component": 0.792156863,
+        "Blue Component": 0.960784314
+      },
+      "Bold Color": {
+        "Red Component": 0.815686275,
+        "Green Component": 0.839215686,
+        "Blue Component": 0.968627451
+      },
+      "Cursor Color": {
+        "Red Component": 0.752941176,
+        "Green Component": 0.792156863,
+        "Blue Component": 0.960784314
+      },
+      "Cursor Text Color": {
+        "Red Component": 0.101960784,
+        "Green Component": 0.105882353,
+        "Blue Component": 0.149019608
+      },
+      "Selection Color": {
+        "Red Component": 0.172549020,
+        "Green Component": 0.200000000,
+        "Blue Component": 0.349019608
+      },
+      "Selected Text Color": {
+        "Red Component": 0.752941176,
+        "Green Component": 0.792156863,
+        "Blue Component": 0.960784314
+      },
+
+      "Ansi 0 Color": {
+        "Red Component": 0.094117647,
+        "Green Component": 0.098039216,
+        "Blue Component": 0.145098039
+      },
+      "Ansi 1 Color": {
+        "Red Component": 0.968627451,
+        "Green Component": 0.466666667,
+        "Blue Component": 0.556862745
+      },
+      "Ansi 2 Color": {
+        "Red Component": 0.619607843,
+        "Green Component": 0.807843137,
+        "Blue Component": 0.415686275
+      },
+      "Ansi 3 Color": {
+        "Red Component": 0.878431373,
+        "Green Component": 0.686274510,
+        "Blue Component": 0.407843137
+      },
+      "Ansi 4 Color": {
+        "Red Component": 0.478431373,
+        "Green Component": 0.635294118,
+        "Blue Component": 0.968627451
+      },
+      "Ansi 5 Color": {
+        "Red Component": 0.733333333,
+        "Green Component": 0.603921569,
+        "Blue Component": 0.968627451
+      },
+      "Ansi 6 Color": {
+        "Red Component": 0.490196078,
+        "Green Component": 0.811764706,
+        "Blue Component": 1.000000000
+      },
+      "Ansi 7 Color": {
+        "Red Component": 0.647058824,
+        "Green Component": 0.662745098,
+        "Blue Component": 0.749019608
+      },
+
+      "Ansi 8 Color": {
+        "Red Component": 0.266666667,
+        "Green Component": 0.290196078,
+        "Blue Component": 0.407843137
+      },
+      "Ansi 9 Color": {
+        "Red Component": 0.968627451,
+        "Green Component": 0.466666667,
+        "Blue Component": 0.556862745
+      },
+      "Ansi 10 Color": {
+        "Red Component": 0.619607843,
+        "Green Component": 0.807843137,
+        "Blue Component": 0.415686275
+      },
+      "Ansi 11 Color": {
+        "Red Component": 0.878431373,
+        "Green Component": 0.686274510,
+        "Blue Component": 0.407843137
+      },
+      "Ansi 12 Color": {
+        "Red Component": 0.478431373,
+        "Green Component": 0.635294118,
+        "Blue Component": 0.968627451
+      },
+      "Ansi 13 Color": {
+        "Red Component": 0.733333333,
+        "Green Component": 0.603921569,
+        "Blue Component": 0.968627451
+      },
+      "Ansi 14 Color": {
+        "Red Component": 0.490196078,
+        "Green Component": 0.811764706,
+        "Blue Component": 1.000000000
+      },
+      "Ansi 15 Color": {
+        "Red Component": 0.752941176,
+        "Green Component": 0.792156863,
+        "Blue Component": 0.960784314
+      }
+    }
+  ]
+}

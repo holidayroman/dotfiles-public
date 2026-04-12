@@ -18,6 +18,7 @@ The installation process is orchestrated by `./install`, which:
    - `~/.gitconfig` → `git/gitconfig`
    - `~/.editorconfig` → `editorconfig.ini`
    - `~/.config/starship.toml` → `starship/starship.toml`
+   - `~/Library/Application Support/iTerm2/DynamicProfiles/dotfiles-profile.json` → `iterm/dotfiles-profile.json` (macOS only)
 4. Runs installation scripts in sequence
 
 ## Key Commands
@@ -63,6 +64,12 @@ Other machine-specific override files (not tracked in git):
   - zsh-history-substring-search
 - Development environment managers (nvm, pyenv, rustup) initialized at end of zshrc.shared.zsh:78-92
 - Starship prompt initialized last (zshrc.shared.zsh:94-96)
+
+### iTerm2 Configuration (macOS)
+- Uses **Dynamic Profiles** to manage terminal settings from dotfiles
+- Profile stored in `iterm/dotfiles-profile.json` and symlinked into iTerm's DynamicProfiles folder
+- To use: open iTerm → Profiles → select "Dotfiles - Tokyo Night"
+- Tokyo Night color scheme applied across terminal, Vim, Starship, FZF, and git-delta
 
 ### Git Configuration
 - User identity stored separately in `~/.gitconfig.user` (not tracked)

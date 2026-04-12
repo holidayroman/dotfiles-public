@@ -1,28 +1,37 @@
-# Starship prompt configuration
+# Starship prompt configuration — Tokyo Night theme
 # https://starship.rs/config/
 
-# Minimal, fast prompt
-add_newline = false
-format = "$username$hostname$directory$git_branch$git_status$nodejs$python$rust$golang$cmd_duration$character"
+add_newline = true
+format = """
+$username$hostname$directory$git_branch$git_status$fill$nodejs$python$rust$golang$cmd_duration
+$character"""
 
 # Timeout for command execution
 command_timeout = 500
 
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[❯](bold #7aa2f7)"
+error_symbol = "[❯](bold #f7768e)"
+
+[fill]
+symbol = " "
 
 [directory]
 truncation_length = 3
 truncate_to_repo = true
+style = "bold #7dcfff"
 format = "[$path]($style)[$read_only]($read_only_style) "
+read_only = " 󰌾"
+read_only_style = "#f7768e"
 
 [git_branch]
 format = "on [$symbol$branch]($style) "
 symbol = " "
+style = "bold #bb9af7"
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "#e0af68"
 conflicted = "="
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -35,31 +44,35 @@ renamed = "»${count}"
 deleted = "✘${count}"
 
 [username]
-style_user = "green bold"
-style_root = "red bold"
+style_user = "bold #9ece6a"
+style_root = "bold #f7768e"
 format = "[$user]($style) "
 disabled = false
 show_always = false
 
 [hostname]
 ssh_only = true
-format = "@ [$hostname](bold blue) "
+format = "at [$hostname](bold #7aa2f7) "
 disabled = false
 
 # Language-specific modules (only shown when project files detected)
 [nodejs]
-format = "[$symbol $version](bold green) "
+format = "[$symbol$version](bold #9ece6a) "
+symbol = " "
 
 [python]
-format = "[$symbol $version( \\($virtualenv\\))](yellow) "
+format = "[$symbol$version( \\($virtualenv\\))](bold #e0af68) "
+symbol = " "
 
 [rust]
-format = "[$symbol $version](red) "
+format = "[$symbol$version](bold #f7768e) "
+symbol = " "
 
 [golang]
-format = "[$symbol $version](cyan) "
+format = "[$symbol$version](bold #73daca) "
+symbol = " "
 
 # Execution time
 [cmd_duration]
 min_time = 2_000
-format = "took [$duration]($style) "
+format = "took [$duration](#ff9e64) "
