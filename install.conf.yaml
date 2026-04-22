@@ -64,3 +64,8 @@
       stdin: true
       stdout: true
       stderr: true
+    - description: Installing claude-sessions (private repo)
+      command: ./scripts/install-claude-sessions.sh
+      stdin: true
+      stdout: true
+      stderr: true

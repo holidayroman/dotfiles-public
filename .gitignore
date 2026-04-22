@@ -2,3 +2,6 @@
 *.local
 *.user
 .claude
+
+# Private repos cloned in alongside dotfiles (see scripts/install-claude-sessions.sh)
+claude-sessions/

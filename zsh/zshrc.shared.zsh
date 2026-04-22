@@ -83,6 +83,14 @@ export PATH="/usr/local/bin:$PATH"
 # Load aliases
 [ -f ~/.dotfiles/zsh/aliases.zsh ] && source ~/.dotfiles/zsh/aliases.zsh
 
+# Auto-update ~/.dotfiles/claude-sessions clone once per 24h, in background.
+# Throttle: FETCH_HEAD mtime (git pull refreshes it). No-op when clone absent.
+_cs_dir="$HOME/.dotfiles/claude-sessions"
+if [ -d "$_cs_dir/.git" ] && { [ ! -f "$_cs_dir/.git/FETCH_HEAD" ] || [ -n "$(command find "$_cs_dir/.git/FETCH_HEAD" -mtime +1 2>/dev/null)" ]; }; then
+  (cd "$_cs_dir" && GIT_TERMINAL_PROMPT=0 git pull --ff-only --quiet </dev/null >/dev/null 2>&1 &)
+fi
+unset _cs_dir
+
 # ZSH plugins (loaded directly, no framework)
 ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"
 

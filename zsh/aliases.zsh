@@ -6,6 +6,11 @@ alias ....="cd ../../.."
 # Git shortcuts
 alias gs="git status"
 
+# claude-sessions (private repo cloned by scripts/install-claude-sessions.sh)
+if [ -x "$HOME/.dotfiles/claude-sessions/claude-sessions" ]; then
+  alias cs="$HOME/.dotfiles/claude-sessions/claude-sessions"
+fi
+
 # Modern replacements (if available). Each shadows the standard tool; bypass
 # with `o<name>` (e.g. ogrep) or `command <name>` (always works, also from
 # scripts that don't load this file).
