@@ -1,4 +1,4 @@
-# System aliases
+# Navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -6,7 +6,9 @@ alias ....="cd ../../.."
 # Git shortcuts
 alias gs="git status"
 
-# Modern replacements (if available)
+# Modern replacements (if available). Each shadows the standard tool; bypass
+# with `o<name>` (e.g. ogrep) or `command <name>` (always works, also from
+# scripts that don't load this file).
 if command -v eza &> /dev/null; then
   alias ls="eza"
   alias ll="eza -alF"
@@ -31,21 +33,45 @@ if command -v fd &> /dev/null; then
   alias ofind="/usr/bin/find"  # original find
 fi
 
-# Prefer ripgrep over grep when available
 if command -v rg &> /dev/null; then
   alias grep="rg"
   alias ogrep="/usr/bin/grep"  # original grep
 fi
 
-# Development shortcuts
 if command -v nvim &> /dev/null; then
   alias vim="nvim"
   alias vi="nvim"
   alias ovim="/usr/bin/vim"  # original vim
 fi
 
-# Pretty tail — colorizes log levels, dates, IPs, UUIDs, JSON
+# tail wrapper — `tail file.log` and `tail -f file.log` colorize via tspin.
+# Tspin shares some flags with tail (-f, -p, -h, -V) but not others (-n, -c,
+# -5, -q, -r, -F, ...). When any tail-only flag is present we fall through to
+# real tail so scripts/agents keep working. `--opt=value` form is handled.
 if command -v tspin &> /dev/null; then
-  alias tail="tspin"
+  tail() {
+    local -a tspin_flags=(
+      -f --follow
+      -p --print
+      -e --exec
+      -h --help
+      -V --version
+      --config-path
+      --highlight
+      --enable --disable --extras
+      --disable-builtin-keywords
+      --pager
+    )
+    local arg flag
+    for arg in "$@"; do
+      [[ "$arg" == -* ]] || continue
+      flag=${arg%%=*}
+      if (( ${tspin_flags[(I)$flag]} == 0 )); then
+        command tail "$@"
+        return
+      fi
+    done
+    command tspin "$@"
+  }
   alias otail="/usr/bin/tail"  # original tail
 fi

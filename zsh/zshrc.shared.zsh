@@ -15,12 +15,22 @@ setopt HIST_VERIFY              # !! expansions are editable, not auto-run
 setopt INC_APPEND_HISTORY       # write each command as it runs
 setopt SHARE_HISTORY            # live-sync across open shells
 
-# `history` shows last 100 with a hint for search/delete helpers
+# `history` defaults to last 100; `history N` shows the last N. Multi-arg
+# calls pass through to `fc -l` (e.g. `history 1 50` for an explicit range).
+# Note: in zsh `fc -l -N` does NOT mean "last N" — we compute the start event.
 history() {
-  fc -l -100
+  if (( $# > 1 )); then
+    fc -l "$@"
+  else
+    local n=${1:-100}
+    [[ "$n" =~ ^[0-9]+$ ]] || { fc -l "$@"; return; }
+    local start=$(( HISTCMD - n + 1 ))
+    (( start < 1 )) && start=1
+    fc -l $start
+  fi
   if [[ -t 1 ]]; then
     print -P -u2 -- ""
-    print -P -u2 -- "%F{242}# last 100 shown — search: %F{111}hgrep <phrase>%F{242}  |  delete: %F{203}hdel <phrase>%f"
+    print -P -u2 -- "%F{242}# search: %F{111}hgrep <phrase>%F{242}  |  delete: %F{203}hdel <phrase>%f"
   fi
 }
 
@@ -105,8 +115,15 @@ if command -v docker &> /dev/null; then
 fi
 
 # Enable completion system (must be after FPATH additions)
+# Skip the security check on cached dump if it's <24h old — much faster startup.
 autoload -Uz compinit
-compinit
+_zcompdump_fresh=( ${ZDOTDIR:-$HOME}/.zcompdump(Nmh-24) )
+if (( $#_zcompdump_fresh )); then
+  compinit -C
+else
+  compinit
+fi
+unset _zcompdump_fresh
 
 # Menu completion - navigate with arrow keys
 zstyle ':completion:*' menu select
@@ -114,7 +131,13 @@ setopt AUTO_MENU
 
 # FZF integration
 if command -v fzf &> /dev/null; then
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  # macOS / manual installs drop a single ~/.fzf.zsh; Debian ships split files.
+  if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+  else
+    [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+    [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+  fi
 
   # FZF configuration
   export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'

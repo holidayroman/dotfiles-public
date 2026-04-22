@@ -54,7 +54,7 @@ Other machine-specific override files (not tracked in git):
 - Uses **vim-plug** for plugin management
 - Plugins auto-installed on first Vim launch
 - CoC extensions auto-install: `coc-tsserver`, `coc-pyright`, `coc-rust-analyzer`
-- Key mappings are extensively documented inline at vim/vimrc.shared.vim:59-116
+- Key mappings are extensively documented inline in `vim/vimrc.shared.vim`
 
 ### ZSH Configuration
 - Does NOT use oh-my-zsh (lightweight, direct plugin loading)
@@ -62,8 +62,8 @@ Other machine-specific override files (not tracked in git):
   - zsh-syntax-highlighting
   - zsh-autosuggestions
   - zsh-history-substring-search
-- Development environment managers (nvm, pyenv, rustup) initialized at end of zshrc.shared.zsh:78-92
-- Starship prompt initialized last (zshrc.shared.zsh:94-96)
+- Development environment managers (nvm, pyenv, rustup) initialized near the end of `zsh/zshrc.shared.zsh`
+- Starship prompt initialized last in `zsh/zshrc.shared.zsh`
 
 ### iTerm2 Configuration (macOS)
 - Uses **Dynamic Profiles** to manage terminal settings from dotfiles
@@ -73,8 +73,9 @@ Other machine-specific override files (not tracked in git):
 
 ### Git Configuration
 - User identity stored separately in `~/.gitconfig.user` (not tracked)
-- Uses git-delta as pager for enhanced diffs (git/gitconfig:51)
-- Extensive git aliases defined (git/gitconfig:9-45)
+- Uses git-delta as pager for enhanced diffs (see `[core] pager` in `git/gitconfig`)
+- Extensive git aliases defined in `git/gitconfig` under `[alias]`
+- Global gitignore lives in `git/gitignore` (symlinked to `~/.gitignore.global`)
 - Pre-commit hook blocks sensitive terms from being committed
 
 ## Important Architecture Notes
@@ -87,7 +88,7 @@ Other machine-specific override files (not tracked in git):
 
 4. **ZSH Plugin Loading**: Plugins are loaded directly from `~/.zsh/plugins/` without a framework, making the setup lightweight and fast.
 
-5. **Development Environment Initialization Order**: In zshrc.shared.zsh, tools initialize in this order: nvm (79-81) → pyenv (83-86) → cargo (89) → starship (94-96). This order matters for PATH precedence.
+5. **Development Environment Initialization Order**: In `zsh/zshrc.shared.zsh`, tools initialize in this order: nvm → pyenv → cargo → direnv → starship. This order matters for PATH precedence — starship must come last so its `init` sees the final PATH.
 
 ## Modifying Configurations
 

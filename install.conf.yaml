@@ -8,6 +8,7 @@
 - link:
     ~/.editorconfig: editorconfig.ini
     ~/.gitconfig: git/gitconfig
+    ~/.gitignore.global: git/gitignore
     ~/.vimrc.shared: vim/vimrc.shared.vim
     ~/.config/nvim/init.vim: nvim/init.vim
     ~/.config/starship.toml: starship/starship.toml
