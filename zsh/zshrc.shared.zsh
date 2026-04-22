@@ -1,15 +1,62 @@
 # ZSH Configuration (without oh-my-zsh)
 
 # History settings
-HISTSIZE=10000
-SAVEHIST=10000
 HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt EXTENDED_HISTORY         # store timestamp + duration per entry
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_SPACE        # leading-space commands aren't recorded
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
-setopt SHARE_HISTORY
+setopt HIST_REDUCE_BLANKS       # normalize whitespace before saving
+setopt HIST_VERIFY              # !! expansions are editable, not auto-run
+setopt INC_APPEND_HISTORY       # write each command as it runs
+setopt SHARE_HISTORY            # live-sync across open shells
+
+# `history` shows last 100 with a hint for search/delete helpers
+history() {
+  fc -l -100
+  if [[ -t 1 ]]; then
+    print -P -u2 -- ""
+    print -P -u2 -- "%F{242}# last 100 shown — search: %F{111}hgrep <phrase>%F{242}  |  delete: %F{203}hdel <phrase>%f"
+  fi
+}
+
+# hgrep <phrase>  —  case-insensitive literal search through full history
+hgrep() {
+  fc -l 1 | command grep -iF -- "$@"
+}
+
+# hdel <phrase>  —  delete every history entry containing <phrase>
+# Prompts before deleting. Works on the saved file + current shell.
+hdel() {
+  emulate -L zsh
+  if [[ -z "$1" ]]; then
+    print -u2 "usage: hdel <phrase>"
+    return 1
+  fi
+  fc -W  # flush in-memory buffer to $HISTFILE first
+  local matches count tmp
+  matches=$(command grep -iF -- "$1" "$HISTFILE")
+  if [[ -z "$matches" ]]; then
+    print -- "no history entries matching: $1"
+    return 0
+  fi
+  count=$(print -r -- "$matches" | wc -l | tr -d ' ')
+  print -r -- "$matches"
+  print -n -- "delete all $count matches from \$HISTFILE? [y/N] "
+  read -r reply
+  if [[ "$reply" == [yY] ]]; then
+    tmp=$(mktemp) || return 1
+    command grep -ivF -- "$1" "$HISTFILE" > "$tmp" && mv "$tmp" "$HISTFILE"
+    fc -R
+    print -- "deleted $count entries"
+  else
+    print -- "aborted"
+  fi
+}
 
 # Environment variables
 export EDITOR='vim'

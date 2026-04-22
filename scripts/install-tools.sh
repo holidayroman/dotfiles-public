@@ -106,6 +106,19 @@ else
       echo "Or via cargo: cargo install git-delta"
     fi
 
+    # Install tailspin (tspin) - not in apt repos
+    if ! command -v tspin &> /dev/null; then
+      echo ""
+      echo "⚠️  tailspin not found in apt repos"
+      if command -v cargo &> /dev/null; then
+        echo "Installing tailspin via cargo..."
+        cargo install tailspin
+      else
+        echo "Install cargo (via rustup) to get tailspin, or install manually"
+        echo "See: https://github.com/bensadeh/tailspin#installation"
+      fi
+    fi
+
     # Install GitHub CLI from official repo
     if ! command -v gh &> /dev/null; then
       echo ""

@@ -6,6 +6,7 @@ brew "fzf"          # Fuzzy finder
 brew "ripgrep"      # Better grep
 brew "git-delta"    # Better git diff
 brew "zoxide"       # Better cd
+brew "tailspin"     # Pretty tail — colorizes log streams (binary: tspin)
 
 # Development tools
 brew "direnv"       # Per-directory env auto-loader

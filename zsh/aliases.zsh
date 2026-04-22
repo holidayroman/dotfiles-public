@@ -43,3 +43,9 @@ if command -v nvim &> /dev/null; then
   alias vi="nvim"
   alias ovim="/usr/bin/vim"  # original vim
 fi
+
+# Pretty tail — colorizes log levels, dates, IPs, UUIDs, JSON
+if command -v tspin &> /dev/null; then
+  alias tail="tspin"
+  alias otail="/usr/bin/tail"  # original tail
+fi
