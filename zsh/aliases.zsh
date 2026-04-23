@@ -25,6 +25,7 @@ if [ -z "$CLAUDECODE" ]; then
   if command -v eza &> /dev/null; then
     alias ls="eza"
     alias ll="eza -alF"
+    alias lls="eza -alF --total-size"
     alias la="eza -A"
     alias l="eza -F"
     alias tree="eza --tree --icons=auto"
@@ -32,6 +33,7 @@ if [ -z "$CLAUDECODE" ]; then
   else
     alias ls="ls -G"  # colorize on macOS
     alias ll="ls -alF"
+    alias lls="ls -alFh"
     alias la="ls -A"
     alias l="ls -CF"
   fi
