@@ -38,6 +38,16 @@ fi
 
 # pyenv + Python
 echo -e "\n${BLUE}=== Python (pyenv) ===${NC}"
+
+# On Linux, ensure pyenv build dependencies are present before compiling Python
+if [[ "$OSTYPE" != "darwin"* ]] && command -v apt-get &> /dev/null; then
+    echo -e "${BLUE}Installing pyenv build dependencies...${NC}"
+    sudo apt-get install -y \
+        build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+        libsqlite3-dev libncursesw5-dev xz-utils tk-dev libxml2-dev \
+        libxmlsec1-dev libffi-dev liblzma-dev 2>/dev/null || true
+fi
+
 export PYENV_ROOT="$HOME/.pyenv"
 
 # Try to initialize pyenv if it exists
