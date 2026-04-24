@@ -169,11 +169,14 @@ let g:lightline = {
 function! LightlineFiletype()
   if winwidth(0) <= 70 | return '' | endif
   if &filetype ==# '' | return " no ft" | endif
-  return &filetype . ' ' . WebDevIconsGetFileTypeSymbol()
+  let l:icon = exists('*WebDevIconsGetFileTypeSymbol') ? ' ' . WebDevIconsGetFileTypeSymbol() : ''
+  return &filetype . l:icon
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  if winwidth(0) <= 70 | return '' | endif
+  let l:icon = exists('*WebDevIconsGetFileFormatSymbol') ? ' ' . WebDevIconsGetFileFormatSymbol() : ''
+  return &fileformat . l:icon
 endfunction
 
 
