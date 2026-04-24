@@ -31,13 +31,9 @@ OPTIONS=""
 [ -n "$SESSIONS" ] && OPTIONS="${SESSIONS}"$'\n'
 OPTIONS="${OPTIONS}[new session]"$'\n'"[no tmux — plain shell]"
 
-# Header shown above the fzf list — acts as a cheat sheet on every connect
-HEADER='── tmux cheat sheet ──────────────────────────────
-Prefix = Ctrl-a  (Ctrl-a Ctrl-a sends literal Ctrl-a)
-  d  detach        c  new window    n/p  next/prev
-  |  vsplit        -  hsplit        1..9 jump window
-  [  copy-mode     r  reload        h    help popup
-──────────────────────────────────────────────────'
+# One-line header above the fzf list — picker stays clean, full cheat sheet
+# is one keystroke away (Ctrl-a h) once you're inside tmux.
+HEADER='prefix: Ctrl-Space    d=detach  c=new-win  |/-=split  arrows=move  n/p=tabs  h=help'
 
 CHOICE=$(printf '%s\n' "$OPTIONS" | fzf \
   --height=60% --reverse --border \

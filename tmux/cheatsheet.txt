@@ -1,36 +1,40 @@
-── tmux cheat sheet ──────────────────────────────────────
-Prefix is Ctrl-a   (press Ctrl-a Ctrl-a to send a literal
-                    Ctrl-a to vim / readline)
+  tmux   —   prefix = Ctrl-Space
+  (tap Ctrl-Space first, then the command key)
 
-  SESSIONS
-    tmux ls          list sessions (from shell, no prefix)
-    Ctrl-a d         detach (session keeps running)
-    Ctrl-a s         switch/choose session
-    Ctrl-a $         rename session
 
-  WINDOWS (like tabs)
-    Ctrl-a c         new window
-    Ctrl-a n / p     next / previous window
-    Ctrl-a 1..9      jump to window N
-    Ctrl-a ,         rename current window
-    Ctrl-a &         kill current window (asks to confirm)
+  WINDOWS    (like browser tabs)
 
-  PANES (splits within a window)
-    Ctrl-a |         split vertically
-    Ctrl-a -         split horizontally
-    Ctrl-a arrow     move between panes
-    Ctrl-a z         zoom current pane (toggle full-screen)
-    Ctrl-a x         kill current pane
+    c           new window
+    n  /  p     next / previous
+    1 .. 9      jump to window N
+    ,           rename current window
+    &           close window  (asks to confirm)
 
-  COPY / SCROLLBACK
-    Ctrl-a [         enter copy-mode (vi keys)
-      v              start selecting
-      y              yank selection (exits copy-mode)
-      q              quit copy-mode
-    Mouse wheel      scroll (mouse mode is on)
 
-  MISC
-    Ctrl-a r         reload ~/.tmux.conf
-    Ctrl-a h         show this cheat sheet
-    Ctrl-a ?         list ALL key bindings
-──────────────────────────────────────────────────────────
+  PANES      (splits inside a window)
+
+    |           split vertically   (side-by-side)
+    -           split horizontally (top + bottom)
+    ← ↓ ↑ →     move between panes
+    z           zoom current pane  (toggle full screen)
+    x           close pane
+    space       cycle pane layouts (pretty rearrange)
+
+
+  SESSION    (the whole tmux workspace)
+
+    d           detach (leave it running, come back later)
+    s           switch to another session
+    $           rename session
+
+
+  HELP
+
+    h           show this cheat sheet
+    ?           list every key binding
+    r           reload tmux config
+
+
+  Scrollback: just use the mouse wheel. Copy-mode ( [ ) is only
+  for searching scrollback or copying text across panes — you
+  probably won't need it day to day.
