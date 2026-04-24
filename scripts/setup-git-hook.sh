@@ -17,9 +17,18 @@ if [ ! -f "$HOOK_FILE" ]; then
 # This hook is LOCAL to the dotfiles repo and not tracked in git
 
 BLOCKED_TERMS=(
-    # Add your sensitive terms here, one per line
-    # Example: "myname"
-    # Example: "mysecretkey"
+    # Common secret markers — always bad in a dotfiles repo.
+    "BEGIN OPENSSH PRIVATE KEY"
+    "BEGIN RSA PRIVATE KEY"
+    "BEGIN PRIVATE KEY"
+    "BEGIN PGP PRIVATE KEY"
+    "aws_secret_access_key"
+    "aws_access_key_id"
+    "api_key="
+    "api-key="
+    "password="
+    "secret="
+    # Add machine-specific terms below (names, emails, hostnames, etc.).
 )
 
 # Check staged files for blocked terms

@@ -74,6 +74,14 @@ export VISUAL='vim'
 export PAGER='less'
 export DIRENV_LOG_FORMAT=""  # silence direnv loading messages
 
+# Homebrew env — handles Apple Silicon (/opt/homebrew) and Intel
+# (/usr/local) paths plus MANPATH/INFOPATH. No-op on Linux if brew absent.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # Development environment paths
 export PATH="/usr/local/bin:$PATH"
 [ -d "/usr/local/go/bin" ] && export PATH="/usr/local/go/bin:$PATH"
@@ -90,6 +98,37 @@ if [ -d "$_cs_dir/.git" ] && { [ ! -f "$_cs_dir/.git/FETCH_HEAD" ] || [ -n "$(co
   (cd "$_cs_dir" && GIT_TERMINAL_PROMPT=0 git pull --ff-only --quiet </dev/null >/dev/null 2>&1 &)
 fi
 unset _cs_dir
+
+# Dotfiles auto-updater — once per 24h in background. Fast-forwards main and
+# relinks (no sudo, no prompts). If the update touched setup scripts or the
+# Brewfile, writes .git/update-pending so the next shell reminds you to run
+# ./install manually (which needs sudo / interactive input).
+_df_dir="$HOME/.dotfiles"
+_df_pending="$_df_dir/.git/update-pending"
+
+if [[ -t 2 ]] && [ -f "$_df_pending" ]; then
+  print -P -u2 -- ""
+  print -P -u2 -- "%F{214}⚠ dotfiles: setup scripts changed upstream — run %F{111}cd ~/.dotfiles && ./install%F{214} to apply%f"
+  print -P -u2 -- ""
+fi
+
+if [ -d "$_df_dir/.git" ] && { [ ! -f "$_df_dir/.git/FETCH_HEAD" ] || [ -n "$(command find "$_df_dir/.git/FETCH_HEAD" -mtime +1 2>/dev/null)" ]; }; then
+  (
+    cd "$_df_dir" || exit
+    [ "$(git symbolic-ref --short HEAD 2>/dev/null)" = "main" ] || exit
+    _before=$(git rev-parse HEAD 2>/dev/null) || exit
+    GIT_TERMINAL_PROMPT=0 git pull --ff-only --quiet </dev/null >/dev/null 2>&1 || exit
+    _after=$(git rev-parse HEAD 2>/dev/null)
+    [ "$_before" = "$_after" ] && exit  # nothing new
+    # Relink only — safe without sudo. Skips the shell-install steps.
+    ./dotbot/bin/dotbot -d "$_df_dir" -c install.conf.yaml --only link create clean </dev/null >/dev/null 2>&1
+    # Flag non-link changes so next shell reminds user to run ./install.
+    if git diff --name-only "$_before..$_after" 2>/dev/null | grep -qE '^(scripts/|Brewfile|install$|install\.conf\.yaml$)'; then
+      : > "$_df_pending"
+    fi
+  ) &!
+fi
+unset _df_dir _df_pending
 
 # ZSH plugins (loaded directly, no framework)
 ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"

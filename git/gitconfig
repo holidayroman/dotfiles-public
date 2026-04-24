@@ -75,7 +75,10 @@
 	enabled = true
 
 [help]
-	autocorrect = 1
+	# 'prompt' asks before running a guessed command instead of executing
+	# after a 0.1s delay (the old behavior risked typos running the wrong
+	# command, e.g. `git pushh` silently becoming `git push`).
+	autocorrect = prompt
 
 [delta]
 	navigate = true

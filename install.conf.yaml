@@ -70,3 +70,7 @@
       stdin: true
       stdout: true
       stderr: true
+    - description: Clearing auto-updater pending flag
+      command: rm -f "${DOTFILES}/.git/update-pending"
+      stdout: false
+      stderr: true
