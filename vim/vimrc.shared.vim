@@ -49,6 +49,9 @@ Plug 'editorconfig/editorconfig-vim'
 " Language support
 Plug 'sheerun/vim-polyglot'
 
+" File-type icons (requires a Nerd Font) — consumed by lightline and nerdtree
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 """"""""""""""""""
@@ -145,7 +148,7 @@ set laststatus=2
 set noshowmode          " hide the current mode (lightline shows it)
 set ttimeoutlen=100
 
-" Lightline
+" Lightline — powerline separators + nerd-font icons via vim-devicons
 let g:lightline = {
       \ 'colorscheme': 'tokyonight',
       \ 'active': {
@@ -155,7 +158,23 @@ let g:lightline = {
       \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
+      \ 'separator':    { 'left': "", 'right': "" },
+      \ 'subseparator': { 'left': "", 'right': "" },
+      \ 'component_function': {
+      \   'filetype':   'LightlineFiletype',
+      \   'fileformat': 'LightlineFileformat',
+      \ },
       \ }
+
+function! LightlineFiletype()
+  if winwidth(0) <= 70 | return '' | endif
+  if &filetype ==# '' | return " no ft" | endif
+  return &filetype . ' ' . WebDevIconsGetFileTypeSymbol()
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
 
 """""""""""""""""""""""""""
