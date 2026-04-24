@@ -15,3 +15,4 @@ brew "starship"     # Fast, minimal prompt
 brew "gh"           # GitHub CLI
 brew "htop"         # Better top
 brew "tldr"         # Better man pages
+brew "tmux"         # Terminal multiplexer — persistent sessions over SSH

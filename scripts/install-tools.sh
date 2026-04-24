@@ -35,7 +35,8 @@ else
       ripgrep \
       zoxide \
       htop \
-      tldr
+      tldr \
+      tmux
 
     # Install neovim - Debian repos have old version (0.7.x), CoC requires 0.8.0+
     # Use pre-built tarball for latest stable version
