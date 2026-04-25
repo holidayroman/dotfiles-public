@@ -22,10 +22,18 @@ fi
 # shell gives it vanilla GNU/BSD behavior without changing the interactive
 # experience.
 if [ -z "$CLAUDECODE" ]; then
+  # One-line filesystem usage summary appended after lls. Picks fields by
+  # position so it works on both BSD and GNU df (mount point is always $NF).
+  _lls_disk_summary() {
+    local fs
+    fs=$(df -h . 2>/dev/null | awk 'NR==2 { printf "%s used of %s (%s) on %s", $3, $2, $5, $NF }')
+    [[ -n "$fs" ]] && print -P "%F{242}── %F{111}${fs//\%/%%}%f"
+  }
+
   if command -v eza &> /dev/null; then
     alias ls="eza"
     alias ll="eza -alF"
-    alias lls="eza -alF --total-size"
+    lls() { command eza -alF --total-size "$@"; _lls_disk_summary; }
     alias la="eza -A"
     alias l="eza -F"
     alias tree="eza --tree --icons=auto"
@@ -33,7 +41,7 @@ if [ -z "$CLAUDECODE" ]; then
   else
     alias ls="ls -G"  # colorize on macOS
     alias ll="ls -alF"
-    alias lls="ls -alFh"
+    lls() { command ls -alFh "$@"; _lls_disk_summary; }
     alias la="ls -A"
     alias l="ls -CF"
   fi
