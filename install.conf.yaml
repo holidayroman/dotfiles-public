@@ -60,6 +60,10 @@
       command: nvim --headless +PlugInstall +qall
       stdout: true
       stderr: true
+    - description: Installing tmux plugins (TPM)
+      command: ./scripts/install-tmux-plugins.sh
+      stdout: true
+      stderr: true
     - description: Installing development environments (nvm, pyenv, rustup)
       command: ./scripts/install-dev-environments.sh
       stdin: true
