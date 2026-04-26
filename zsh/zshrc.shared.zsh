@@ -204,10 +204,23 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# nvm (Node Version Manager)
+# nvm (Node Version Manager) — lazy-loaded.
+# Sourcing nvm.sh eagerly costs ~150ms of shell startup (per zprof) which
+# widens the race window where Warp's SSH bootstrap script echoes visibly
+# before our end-of-rcfile Warpify DCS fires. Stub functions for
+# nvm/node/npm/npx source nvm.sh on first use instead.
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  _load_nvm() {
+    unset -f nvm node npm npx _load_nvm
+    \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  }
+  for _cmd in nvm node npm npx; do
+    eval "$_cmd() { _load_nvm; $_cmd \"\$@\"; }"
+  done
+  unset _cmd
+fi
 
 # pyenv (Python Version Manager)
 export PYENV_ROOT="$HOME/.pyenv"
@@ -233,7 +246,10 @@ fi
 # sessions. Non-Warp terminals ignore unknown DCS sequences, so this is a
 # no-op elsewhere. Gated on interactive + stdout is a tty so the bytes don't
 # leak into piped/redirected output. Must be the last thing the rcfile prints.
+# Skipped inside tmux: tmux strips DCS without a passthrough wrapper, and the
+# wrapper has caused rendering issues at the outer Warp end — leave it off
+# until we have a reliable detector for "outer terminal is Warp".
 # https://docs.warp.dev/terminal/warpify/subshells
-if [[ -o interactive && -t 1 ]]; then
+if [[ -o interactive && -t 1 && -z "$TMUX" ]]; then
   printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
 fi
