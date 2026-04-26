@@ -240,16 +240,3 @@ fi
 if command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
 fi
-
-# Warp Auto-Warpify — DCS escape that signals Warp this shell finished sourcing
-# its rcfile, so blocks / completions / AI come back in subshells and SSH
-# sessions. Non-Warp terminals ignore unknown DCS sequences, so this is a
-# no-op elsewhere. Gated on interactive + stdout is a tty so the bytes don't
-# leak into piped/redirected output. Must be the last thing the rcfile prints.
-# Skipped inside tmux: tmux strips DCS without a passthrough wrapper, and the
-# wrapper has caused rendering issues at the outer Warp end — leave it off
-# until we have a reliable detector for "outer terminal is Warp".
-# https://docs.warp.dev/terminal/warpify/subshells
-if [[ -o interactive && -t 1 && -z "$TMUX" ]]; then
-  printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
-fi
