@@ -91,6 +91,9 @@ export PATH="/usr/local/bin:$PATH"
 # Load aliases
 [ -f ~/.dotfiles/zsh/aliases.zsh ] && source ~/.dotfiles/zsh/aliases.zsh
 
+# Load `help` command
+[ -f ~/.dotfiles/zsh/help.zsh ] && source ~/.dotfiles/zsh/help.zsh
+
 # Auto-update ~/.dotfiles/claude-sessions clone once per 24h, in background.
 # Throttle: FETCH_HEAD mtime (git pull refreshes it). No-op when clone absent.
 _cs_dir="$HOME/.dotfiles/claude-sessions"

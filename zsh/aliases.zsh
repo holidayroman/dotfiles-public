@@ -6,6 +6,9 @@ alias ....="cd ../../.."
 # Git shortcuts
 alias gs="git status"
 
+# Re-source ~/.zshrc (picks up shared + local customizations)
+alias reload="source ~/.zshrc"
+
 # claude-sessions (private repo cloned by scripts/install-claude-sessions.sh)
 if [ -x "$HOME/.dotfiles/claude-sessions/claude-sessions" ]; then
   alias cs="$HOME/.dotfiles/claude-sessions/claude-sessions"
