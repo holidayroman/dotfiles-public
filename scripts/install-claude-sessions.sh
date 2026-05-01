@@ -4,8 +4,7 @@
 # CLAUDE_SESSIONS_REPO env var so this dotfiles repo can stay public without
 # disclosing which repo you actually point at.
 #
-# Easiest setup: add a line to ~/.config-private/dotfiles.env (or any other
-# file you source from your shell):
+# Easiest setup: drop a line in ~/.config/dotfiles.env (untracked):
 #
 #     export CLAUDE_SESSIONS_REPO=git@github.com:youraccount/claude-sessions.git
 #
@@ -19,8 +18,8 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Pull in optional private env (won't fail if missing)
-[ -f "$HOME/.config-private/dotfiles.env" ] && source "$HOME/.config-private/dotfiles.env"
+# Pull in optional local env (won't fail if missing)
+[ -f "$HOME/.config/dotfiles.env" ] && source "$HOME/.config/dotfiles.env"
 
 DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 TARGET_DIR="$DOTFILES_DIR/claude-sessions"
