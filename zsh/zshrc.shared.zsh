@@ -154,6 +154,15 @@ if [ -f "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-sea
   bindkey '^[[B' history-substring-search-down
 fi
 
+# 1Password SSH agent (macOS) — point all tools at the 1P agent socket.
+# `ssh` itself already uses it via `IdentityAgent` in ~/.ssh/config; this also
+# covers ssh-add, rsync, ansible, language SDKs, etc. that read SSH_AUTH_SOCK.
+_op_agent_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+if [[ "$OSTYPE" == "darwin"* ]] && [[ -S "$_op_agent_sock" ]]; then
+  export SSH_AUTH_SOCK="$_op_agent_sock"
+fi
+unset _op_agent_sock
+
 # Homebrew completion (macOS)
 if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
