@@ -111,3 +111,5 @@
 	gpgsign = true
 [tag]
 	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.dotfiles/git/allowed_signers
