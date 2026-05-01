@@ -34,3 +34,9 @@ __pycache__/
 
 # Logs
 *.log
+
+# 1Password CLI plugin local config (per-machine)
+.op/
+
+# Python build artifacts
+*.egg-info/
