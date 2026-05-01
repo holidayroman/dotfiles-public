@@ -103,3 +103,11 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !gh auth git-credential
+[gpg]
+	format = ssh
+[user]
+	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSZr3kfz9LW7YYWAX62gaPkH3LGuTLLaFD1Pp8nrjgj
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
